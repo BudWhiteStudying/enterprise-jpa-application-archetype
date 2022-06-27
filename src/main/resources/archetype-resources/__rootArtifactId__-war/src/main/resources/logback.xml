@@ -1,0 +1,74 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<configuration debug="false" scan="true">
+
+    <!-- These properties can be set as a Java option -->
+    <!-- like java -DLOG_DIR=logs startServer.jar or whatever -->
+    <property name="LOG_DIR" value="${symbol_dollar}{logging.logs.dir:-logs}" />
+
+    <property name="APPLICATION_LOG_FILE" value="${symbol_dollar}{logging.application.log.file:-application.log}" />
+    <property name="APPLICATION_LOG_SIZE_CAP" value="${symbol_dollar}{logging.application.log.size.cap:-1GB}" />
+    <property name="APPLICATION_LOG_MAX_HISTORY_DAYS" value="${symbol_dollar}{logging.application.log.max.history.days:-7}" />
+    <property name="APPLICATION_LOG_LEVEL" value="${symbol_dollar}{logging.application.log.level:-DEBUG}" />
+    <property name="APPLICATION_LOG_PATTERN" value="%d %-5level [%thread] %logger{35}:%line - %msg%n" />
+
+    <property name="HTTP_TRACE_LOG_FILE" value="${symbol_dollar}{logging.http-trace.log.file:-http-trace.log}" />
+    <property name="HTTP_TRACE_LOG_SIZE_CAP" value="${symbol_dollar}{logging.http-trace.log.size.cap:-1GB}" />
+    <property name="HTTP_TRACE_LOG_MAX_HISTORY_DAYS" value="${symbol_dollar}{logging.http-trace.log.max.history.days:-2}" />
+    <property name="HTTP_TRACE_LOG_LEVEL" value="${symbol_dollar}{logging.http-trace.log.level:-TRACE}" />
+    <property name="HTTP_TRACE_LOG_PATTERN" value="%d %-5level %logger{35}:%line - %msg%n" />
+
+    <!-- end of properties -->
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="APPLICATION-LOG-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${symbol_dollar}{LOG_DIR}/${symbol_dollar}{APPLICATION_LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${symbol_dollar}{LOG_DIR}/${symbol_dollar}{APPLICATION_LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+
+            <maxHistory>${symbol_dollar}{APPLICATION_LOG_MAX_HISTORY_DAYS}</maxHistory>
+            <totalSizeCap>${symbol_dollar}{APPLICATION_LOG_SIZE_CAP}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>${symbol_dollar}{APPLICATION_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="HTTP-TRACE-LOG-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${symbol_dollar}{LOG_DIR}/${symbol_dollar}{HTTP_TRACE_LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${symbol_dollar}{LOG_DIR}/${symbol_dollar}{HTTP_TRACE_LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+
+            <maxHistory>${symbol_dollar}{HTTP_TRACE_LOG_MAX_HISTORY_DAYS}</maxHistory>
+            <totalSizeCap>${symbol_dollar}{HTTP_TRACE_LOG_SIZE_CAP}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>${symbol_dollar}{HTTP_TRACE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    
+    <logger name="${package}" level="${symbol_dollar}{APPLICATION_LOG_LEVEL}" additivity="false">
+        <appender-ref ref="APPLICATION-LOG-FILE"/>
+    </logger>
+
+    <!-- The logger name here is static because this class -->
+    <!-- is from an external library, hence unaffected by -->
+    <!-- the choice of group/artifact id -->
+    <logger name="com.budwhite.studying.framework.config.ApiLoggingInterceptor" level="${symbol_dollar}{HTTP_TRACE_LOG_LEVEL}" additivity="false">
+        <appender-ref ref="HTTP-TRACE-LOG-FILE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

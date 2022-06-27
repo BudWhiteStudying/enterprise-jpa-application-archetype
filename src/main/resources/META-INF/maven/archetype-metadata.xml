@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor xsi:schemaLocation="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0 http://maven.apache.org/xsd/archetype-descriptor-1.1.0.xsd" name="enterprise-jpa-application"
+    xmlns="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <requiredProperties>
+    <requiredProperty key="groupId">
+      <defaultValue>com.budwhite.studying</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="package">
+      <defaultValue>${groupId}.${artifactId.replace("-",".")}</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="camelApplicationName">
+      <defaultValue>${artifactId.replaceAll("^a|-a", "A").replaceAll("^b|-b", "B").replaceAll("^c|-c", "C").replaceAll("^d|-d", "D").replaceAll("^e|-e", "E").replaceAll("^f|-f", "F").replaceAll("^g|-g", "G").replaceAll("^h|-h", "H").replaceAll("^i|-i", "I").replaceAll("^j|-j", "J").replaceAll("^k|-k", "K").replaceAll("^l|-l", "L").replaceAll("^m|-m", "M").replaceAll("^n|-n", "N").replaceAll("^o|-o", "O").replaceAll("^p|-p", "P").replaceAll("^q|-q", "Q").replaceAll("^r|-r", "R").replaceAll("^s|-s", "S").replaceAll("^t|-t", "T").replaceAll("^u|-u", "U").replaceAll("^v|-v", "V").replaceAll("^w|-w", "W").replaceAll("^x|-x", "X").replaceAll("^y|-y", "Y").replaceAll("^z|-z", "Z")}</defaultValue>
+    </requiredProperty>
+  </requiredProperties>
+  <fileSets>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory/>
+      <includes>
+        <include>.gitignore.tmpl</include>
+        <include>**/*README.md</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <modules>
+    <module id="__rootArtifactId__-war" dir="__rootArtifactId__-war" name="__rootArtifactId__-war">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/main/resources</directory>
+          <excludes>
+            <exclude>**/*.jar</exclude>
+            <exclude>**/*.png</exclude>
+          </excludes>
+        </fileSet>
+        <fileSet filtered="false">
+          <directory>src/main/resources</directory>
+          <includes>
+            <include>**/*.png</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="__rootArtifactId__-data" dir="__rootArtifactId__-data" name="__rootArtifactId__-data" >
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="__rootArtifactId__-feature" dir="__rootArtifactId__-feature" name="__rootArtifactId__-feature">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/test/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="__rootArtifactId__-factory" dir="__rootArtifactId__-factory" name="__rootArtifactId__-factory">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/test/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="__rootArtifactId__-model" dir="__rootArtifactId__-model" name="__rootArtifactId__-model">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="__rootArtifactId__-integration" dir="__rootArtifactId__-integration" name="__rootArtifactId__-integration" />
+    <module id="__rootArtifactId__-framework" dir="__rootArtifactId__-framework" name="__rootArtifactId__-framework">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="__rootArtifactId__-ear" dir="__rootArtifactId__-ear" name="__rootArtifactId__-ear"/>
+  </modules>
+</archetype-descriptor>

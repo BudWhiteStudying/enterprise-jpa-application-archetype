@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>${rootArtifactId}</artifactId>
+        <groupId>${groupId}</groupId>
+        <version>${version}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>${rootArtifactId}-war</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.budwhite.studying</groupId>
+            <artifactId>${rootArtifactId}-factory</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.budwhite.studying</groupId>
+            <artifactId>${rootArtifactId}-feature</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.budwhite.studying</groupId>
+            <artifactId>${rootArtifactId}-framework</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.ruleoftech</groupId>
+                <artifactId>markdown-page-generator-plugin</artifactId>
+                <version>2.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <inputDirectory>${project.basedir}/../</inputDirectory>
+                    <outputDirectory>${project.basedir}/src/main/resources/static/</outputDirectory>
+                    <inputEncoding>UTF-8</inputEncoding>
+                    <outputEncoding>UTF-8</outputEncoding>
+                    <headerHtmlFile>${project.basedir}/src/main/resources/website/readme-head.html</headerHtmlFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
